@@ -80,14 +80,16 @@ write(enumCase: .y)
 write(enumCase: .e2(.d))
 
 
-// MARK: Possible breaking change
+// MARK: Possible breaking change in future versions
 
 /*
 struct S: P, CaseIterable {
-    static var allCases: [E1] { E1.allCases }
-    
+ 
+    /// not allowed (in Swift 5), because `E1` is not equvalent to `S`
     typealias AllCases = [E1]
-    
+ 
+    static var allCases: [E1] { E1.allCases }
+
     init?(rawValue: String) {
         self.rawValue = rawValue
         self.description = ""
