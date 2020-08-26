@@ -5,10 +5,16 @@ import Foundation
 protocol P: CustomStringConvertible {
     init?(rawValue: String)
     var rawValue: String { get }
+
+    static var allEnumCases: [P] { get }
+}
+
+extension P where Self: CaseIterable {
+    static var allEnumCases: [P] { allCases as! [P] }
 }
 
 
-enum E1: String {
+enum E1: String, CaseIterable {
     case a, b
 }
 
@@ -23,7 +29,7 @@ extension E1: P {
     }
 }
 
-enum E2: String {
+enum E2: String, CaseIterable {
     case c, d
 }
 
@@ -40,16 +46,16 @@ extension E2: P {
 
 
 enum X {
-    case e1(E1), e2(E2), x, y, z
+    case e1(E1.Type), e2(E2.Type), x, y, z
 }
-
 extension X {
-    var associatedValue: P? {
+    
+    var associatedValueType: P.Type? {
         switch self {
         case let .e1(x):
-            return x
+            return x.self as P.Type
         case let .e2(x):
-            return x
+            return x.self as P.Type
         default: return nil
         }
     }
@@ -64,40 +70,28 @@ extension X {
         }
     }
 }
-
+extension X: CaseIterable {
+    public static var allCases: [X] {
+        //thorws error in playgounds
+        [.e1(E1.self), .e2(E2.self), .x, .y, .z]
+    }
+}
 
 // MARK: Implementaion
 
-func write(enumCase: X) {
-    print("Title: \(enumCase.title)")
-    if let aValue = enumCase.associatedValue {
-        print("  Value: \(aValue.rawValue)")
+func writeAll() {
+    for enumCase in X.allCases {
+        print("Title: \(enumCase.title)")
+        if let type = enumCase.associatedValueType {
+            print("  All Values:")
+            listValues(for: type)
+        }
     }
 }
 
-write(enumCase: .e1(.a))
-write(enumCase: .y)
-write(enumCase: .e2(.d))
-
-
-// MARK: Possible breaking change
-
-/*
-struct S: P, CaseIterable {
-    static var allCases: [E1] { E1.allCases }
-    
-    typealias AllCases = [E1]
-    
-    init?(rawValue: String) {
-        self.rawValue = rawValue
-        self.description = ""
+func listValues(for type: P.Type) {
+    for x in type.allEnumCases {
+        print("    \(x.rawValue)")
     }
-    
-    var rawValue: String
-        
-    var description: String
 }
-
-let s = S(rawValue: "x")
-S.allEnumCases
- */
+writeAll()
