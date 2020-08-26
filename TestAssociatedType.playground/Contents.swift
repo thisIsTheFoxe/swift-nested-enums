@@ -44,12 +44,11 @@ extension E2: P {
     }
 }
 
-
 enum X {
     case e1(E1.Type), e2(E2.Type), x, y, z
 }
+
 extension X {
-    
     var associatedValueType: P.Type? {
         switch self {
         case let .e1(x):
@@ -70,12 +69,15 @@ extension X {
         }
     }
 }
+
+
 extension X: CaseIterable {
     public static var allCases: [X] {
-        //thorws error in playgounds
+        //thorws an error in playgounds
         [.e1(E1.self), .e2(E2.self), .x, .y, .z]
     }
 }
+
 
 // MARK: Implementaion
 
