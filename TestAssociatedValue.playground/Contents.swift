@@ -78,28 +78,3 @@ func write(enumCase: X) {
 write(enumCase: .e1(.a))
 write(enumCase: .y)
 write(enumCase: .e2(.d))
-
-
-// MARK: Possible breaking change in future versions
-
-/*
-struct S: P, CaseIterable {
- 
-    /// not allowed (in Swift 5), because `E1` is not equvalent to `S`
-    typealias AllCases = [E1]
- 
-    static var allCases: [E1] { E1.allCases }
-
-    init?(rawValue: String) {
-        self.rawValue = rawValue
-        self.description = ""
-    }
-    
-    var rawValue: String
-        
-    var description: String
-}
-
-let s = S(rawValue: "x")
-S.allEnumCases
- */
