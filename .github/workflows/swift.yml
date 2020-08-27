@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup
-    - run: pwd; ls -la
+      run: pwd; ls -la
     - name: Run AssociatedValue
       run: swift -v TestAssociatedValue.playground/Contents.swift
     - name: Run AssociatedType
