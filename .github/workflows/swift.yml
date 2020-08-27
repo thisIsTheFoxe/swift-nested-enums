@@ -10,12 +10,9 @@ jobs:
   build:
 
     runs-on: macos-latest
-
+      
     steps:
     - uses: actions/checkout@v2
-    - name: Setup
-      run: pwd; ls -la
-    - name: Run AssociatedValue
-      run: swift -v TestAssociatedValue.playground/Contents.swift
-    - name: Run AssociatedType
-      run: swift -v TestAssociatedType.playground/Contents.swift
+    - name: Run Swift files
+      # bash ignores .swift files on top-level for **/*.swift
+      run: for file in **/*.swift; do swift -v $file; done;

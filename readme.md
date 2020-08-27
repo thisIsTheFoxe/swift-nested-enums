@@ -1,4 +1,6 @@
 # Swift Enums with Associated Values
+![Swift CI](https://github.com/thisisthefoxe/swift-nested-enums/workflows/Swift/badge.svg)
+
 ## Intro
 This need for this idea came from modeling an item-category with sub-categories. Since those can be enumerated and have discrete, finite values, something like this would be neat:
 
