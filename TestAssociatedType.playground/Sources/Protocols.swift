@@ -1,5 +1,15 @@
 import Foundation
 
+
+enum Err: Error {
+    case e
+    
+    
+    static func t() throws {
+        throw Err.e
+    }
+}
+
 public protocol P: CustomStringConvertible {
     init?(rawValue: String)
     var rawValue: String { get }
@@ -9,8 +19,8 @@ public protocol P: CustomStringConvertible {
 
 public extension P where Self: CaseIterable {
     static var allEnumCases: [P] { allCases as! [P] }
-
-    func assert() {
-        assert(0 == 1)
+    
+    static func a() {
+        try! Err.t()
     }
 }

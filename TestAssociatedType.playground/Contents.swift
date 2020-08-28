@@ -62,7 +62,7 @@ extension X {
 extension X: CaseIterable {
     public static var allCases: [X] {
         //thorws an error in playgounds
-        [.e1(E1.self), .e2(E2.self), .x, .y, .z]
+        [.x, .y, .z]
     }
 }
 
@@ -72,6 +72,7 @@ extension X: CaseIterable {
 func writeAll() {
     for enumCase in X.allCases {
         print("Title: \(enumCase.title)")
+        E1.a()
         if let type = enumCase.associatedValueType {
             print("  All Values:")
             listValues(for: type)
@@ -81,8 +82,8 @@ func writeAll() {
 
 func listValues(for type: P.Type) {
     for x in type.allEnumCases {
-	x.assert()
         print("    \(x.rawValue)")
     }
 }
+
 writeAll()
