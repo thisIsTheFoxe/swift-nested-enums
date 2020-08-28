@@ -2,18 +2,6 @@ import Foundation
 
 // MARK: Definitions
 
-protocol P: CustomStringConvertible {
-    init?(rawValue: String)
-    var rawValue: String { get }
-
-    static var allEnumCases: [P] { get }
-}
-
-extension P where Self: CaseIterable {
-    static var allEnumCases: [P] { allCases as! [P] }
-}
-
-
 enum E1: String, CaseIterable {
     case a, b
 }
@@ -93,6 +81,7 @@ func writeAll() {
 
 func listValues(for type: P.Type) {
     for x in type.allEnumCases {
+	x.assert()
         print("    \(x.rawValue)")
     }
 }

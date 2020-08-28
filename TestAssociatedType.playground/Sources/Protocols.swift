@@ -9,4 +9,8 @@ public protocol P: CustomStringConvertible {
 
 public extension P where Self: CaseIterable {
     static var allEnumCases: [P] { allCases as! [P] }
+
+    func assert() {
+        assert(0 == 1)
+    }
 }
